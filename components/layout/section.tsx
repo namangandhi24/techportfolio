@@ -24,12 +24,13 @@ export function Section({
     <section
       id={id}
       aria-labelledby={`${id}-title`}
-      className={cn("section-padding scroll-mt-24", className)}
+      className={cn("section-padding", className)}
     >
       <div className="container-wide">
         <header
+          data-scroll-anchor
           className={cn(
-            "relative mb-16 md:mb-20",
+            "relative mb-12 md:mb-14",
             chapter ? "section-header-editorial" : "max-w-2xl",
           )}
         >

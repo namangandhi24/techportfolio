@@ -19,7 +19,7 @@ export type JourneyStage = {
 
 /**
  * Career arc: college (2017–2021) → professional engineering from Jun 2021.
- * Stacks visualize how scope grew—not job titles alone.
+ * Narrative only—resume bullets and dates are canonical in experience.ts.
  */
 export const journeyStages: JourneyStage[] = [
   {
@@ -32,7 +32,7 @@ export const journeyStages: JourneyStage[] = [
     descriptor:
       "Circuits and systems thinking first—then software, projects, and first interfaces. The base before any production role.",
     recruiterNote:
-      "STEM discipline and self-directed builds before enterprise delivery—shows intent, not just coursework.",
+      "STEM discipline before enterprise delivery—intent and craft, not coursework alone.",
     nodes: [
       { id: "stem", label: "STEM foundations" },
       { id: "code", label: "Software craft" },
@@ -51,9 +51,8 @@ export const journeyStages: JourneyStage[] = [
     subtitle: "Application Development Associate",
     period: "Jun 2021 — Nov 2022",
     descriptor:
-      "Joined Accenture and moved from experiments to reviewed releases—UI, APIs, and release discipline on real client work.",
-    recruiterNote:
-      "Clear inflection point: career engineering starts 2021, with production ownership from day one in consulting.",
+      "Moved from experiments to reviewed releases—real client UI, APIs, and release discipline.",
+    recruiterNote: "Career engineering starts here—see Experience for role highlights.",
     nodes: [
       { id: "users", label: "Users" },
       { id: "ui", label: "UI" },
@@ -72,9 +71,8 @@ export const journeyStages: JourneyStage[] = [
     subtitle: "Application Development Analyst",
     period: "Nov 2022 — 2024",
     descriptor:
-      "Shared component libraries, dense dashboards, and quality bars—performance and accessibility on every delivery.",
-    recruiterNote:
-      "Evidence of senior-leaning frontend: reuse, documentation culture, and multi-module platform thinking.",
+      "Scope grew into shared libraries, dense dashboards, and quality bars across modules—not single-screen work.",
+    recruiterNote: "Platform and reuse story—bullets in Experience.",
     nodes: [
       { id: "users", label: "Users" },
       { id: "ui", label: "UI" },
@@ -97,9 +95,8 @@ export const journeyStages: JourneyStage[] = [
     subtitle: "Application Development Analyst",
     period: "2024 — Present",
     descriptor:
-      "Owns the full path—interface, services, data, and deployment—so features ship as coherent systems, not isolated screens.",
-    recruiterNote:
-      "Full-stack credibility for teams that need one engineer to reason across the entire delivery surface.",
+      "Owns the full path—interface, services, data, and deployment—so features ship as coherent systems.",
+    recruiterNote: "End-to-end delivery—current role details in Experience.",
     nodes: [
       { id: "users", label: "Users" },
       { id: "frontend", label: "Frontend" },
@@ -131,9 +128,9 @@ export const journeyEras = journeyStages.map((s) => ({
 }));
 
 export const journeyIntro =
-  "Four chapters—from engineering school (2017–2021) to enterprise platforms. Professional delivery starts 2021; scroll to watch the stack grow.";
+  "Four chapters—from engineering school to full-stack delivery. Watch the stack grow; dates and bullets live in Experience.";
 
 export const JOURNEY_STAGE_COUNT = journeyStages.length;
 
-/** Scroll track height per stage (vh) — natural scroll, no heavy pin */
+/** Desktop journey uses GSAP ScrollTrigger pin; distance is viewport-based in the component */
 export const JOURNEY_STAGE_SCROLL_VH = 85;

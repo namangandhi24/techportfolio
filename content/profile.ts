@@ -1,12 +1,14 @@
+import { profileAbout } from "@/content/proof";
+
 export const profile = {
   linkedinUrl: "https://www.linkedin.com/in/gandhinaman/",
+  instagramUrl: "https://www.instagram.com/",
   location: "Jhansi, Uttar Pradesh, India",
   locationShort: "India · Remote-friendly",
   timezone: "Asia/Kolkata",
   currentRole: "Application Development Analyst",
   currentCompany: "Accenture",
-  about:
-    "Full Stack Engineer with 4+ years at Accenture building enterprise platforms, reusable UI libraries, and multi-brand web experiences—with a focus on performance, accessibility, and maintainable architecture.",
+  about: profileAbout(),
   education: [
     {
       school: "GLA University",

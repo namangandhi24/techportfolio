@@ -6,7 +6,7 @@
 |------|----------------|
 | `content/profile.ts` | Location, about |
 | `content/site.ts` | Headline, availability, email (env) |
-| `content/achievements.ts` | Strip labels and evidence lines |
+| `content/proof.ts` | Hero metrics, stack, tenure (single source of truth) |
 | `content/principles.ts` | Three principle cards |
 | `content/journey.ts` | Career era copy and tech |
 | `content/projects.ts` | Challenge, metrics, architecture (use real % when possible) |

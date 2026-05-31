@@ -1,5 +1,7 @@
-import { site } from "@/content/site";
+import type { BrandLogoId } from "@/content/brand-logos";
 import { profile } from "@/content/profile";
+import { site } from "@/content/site";
+import { SocialLogo } from "@/components/ui/brand-logo";
 import { Section } from "@/components/layout/section";
 import { SectionReveal } from "@/components/motion/section-reveal";
 import { LinkButton } from "@/components/ui/button";
@@ -41,12 +43,14 @@ export function ContactBento() {
           <div className="grid divide-y border-border sm:grid-cols-3 sm:divide-x sm:divide-y-0">
             <ContactChannel
               title="LinkedIn"
+              brand="linkedin"
               description="Professional background and recommendations."
               href={site.linkedinUrl}
               action="View profile"
             />
             <ContactChannel
               title="GitHub"
+              brand="github"
               description="Code samples, contributions, and pinned work."
               href={site.githubUrl}
               action="View repositories"
@@ -70,11 +74,13 @@ export function ContactBento() {
 
 function ContactChannel({
   title,
+  brand,
   description,
   href,
   action,
 }: {
   title: string;
+  brand: BrandLogoId;
   description: string;
   href: string;
   action: string;
@@ -87,7 +93,9 @@ function ContactChannel({
       className="group flex flex-col justify-between px-6 py-6 transition-colors duration-200 hover:bg-background sm:px-8"
     >
       <div>
-        <p className="text-sm font-semibold text-foreground">{title}</p>
+        <p className="text-sm font-semibold text-foreground">
+          <SocialLogo brand={brand} label={title} className="gap-2" />
+        </p>
         <p className="mt-2 text-sm leading-relaxed text-muted">{description}</p>
       </div>
       <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-accent transition-transform duration-200 group-hover:translate-x-0.5">

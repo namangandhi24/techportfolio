@@ -2,27 +2,33 @@
 
 import { motion } from "framer-motion";
 import { metrics, site, techBadges } from "@/content/site";
+import { TechLogoLabel } from "@/components/ui/brand-logo";
 import { HeroBrandingVisual } from "@/components/sections/hero-branding-visual";
 import { LinkButton } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CommandPaletteHint } from "@/components/ui/command-palette";
 import { MetricValue } from "@/components/ui/metric-value";
+import { useHydrated } from "@/hooks/use-hydrated";
 import { useReducedMotion } from "@/components/motion/use-reduced-motion";
 
 export function Hero() {
+  const hydrated = useHydrated();
   const reduced = useReducedMotion();
+  const animate = hydrated && !reduced;
 
   return (
     <section
+      id="hero"
       aria-labelledby="hero-title"
-      className="relative isolate min-h-[100svh] scroll-mt-0 overflow-hidden pt-24 pb-16 lg:pb-24"
+      className="relative isolate box-border flex min-h-svh scroll-mt-0 flex-col justify-center overflow-hidden pt-16 pb-14 lg:pb-20"
     >
       <div className="pointer-events-none absolute inset-0 z-0 grid-pattern hero-gradient" />
 
-      <div className="container-wide relative z-[1] grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14 lg:pt-12">
+      <div className="container-wide relative z-[1] grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
         <div>
           <motion.div
-            initial={reduced ? false : { opacity: 0, y: 16 }}
+            key={animate ? "hero-in" : "hero-static"}
+            initial={animate ? { opacity: 0, y: 16 } : false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ type: "spring", stiffness: 260, damping: 28 }}
           >
@@ -41,30 +47,34 @@ export function Hero() {
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
               {site.subheadline}
             </p>
-            <p className="mt-3 text-sm text-muted-foreground">{site.socialProof}</p>
-
-            <ul className="mt-6 flex flex-wrap gap-2" aria-label="Core technologies">
+            {/* <ul className="mt-6 flex flex-wrap gap-2" aria-label="Core technologies">
               {techBadges.map((tech, i) => (
                 <motion.li
                   key={tech}
-                  className="tech-badge-glow"
-                  initial={reduced ? false : { opacity: 0, y: 6 }}
+                  className="engineering-pill engineering-pill--mono"
+                  initial={animate ? { opacity: 0, y: 6 } : false}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 + i * 0.04 }}
+                  transition={{ delay: animate ? 0.2 + i * 0.04 : 0 }}
                 >
-                  {tech}
+                  <TechLogoLabel name={tech} logoClassName="h-3.5 w-3.5" />
                 </motion.li>
               ))}
-            </ul>
+            </ul> */}
 
-            <div className="mt-10 flex flex-wrap items-center gap-3">
-              <LinkButton href="#work" variant="primary" size="lg">
+            <div className="mt-10 flex w-full min-w-0 flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+              <LinkButton href="#work" variant="primary" size="lg" className="w-full sm:w-auto">
                 View projects
               </LinkButton>
-              <LinkButton href={site.resumeUrl} variant="secondary" size="lg" target="_blank">
+              <LinkButton
+                href={site.resumeUrl}
+                variant="secondary"
+                size="lg"
+                target="_blank"
+                className="w-full sm:w-auto"
+              >
                 Download resume
               </LinkButton>
-              <LinkButton href="#contact" variant="ghost" size="lg">
+              <LinkButton href="#contact" variant="ghost" size="lg" className="w-full sm:w-auto">
                 Contact me
               </LinkButton>
               <CommandPaletteHint />
@@ -74,9 +84,14 @@ export function Hero() {
               {metrics.map((m, i) => (
                 <motion.div
                   key={m.label}
-                  initial={reduced ? false : { opacity: 0, y: 8 }}
+                  initial={animate ? { opacity: 0, y: 8 } : false}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.35 + i * 0.06, type: "spring", stiffness: 300, damping: 30 }}
+                  transition={{
+                    delay: animate ? 0.35 + i * 0.06 : 0,
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 30,
+                  }}
                 >
                   <dt className="text-[10px] font-medium tracking-widest text-muted uppercase">
                     {m.label}
@@ -92,9 +107,10 @@ export function Hero() {
 
         <motion.div
           className="relative flex items-center justify-center lg:justify-end"
-          initial={reduced ? false : { opacity: 0, y: 20 }}
+          key={animate ? "hero-visual-in" : "hero-visual-static"}
+          initial={animate ? { opacity: 0, y: 20 } : false}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 220, damping: 26, delay: 0.12 }}
+          transition={{ type: "spring", stiffness: 220, damping: 26, delay: animate ? 0.12 : 0 }}
         >
           <HeroBrandingVisual />
         </motion.div>

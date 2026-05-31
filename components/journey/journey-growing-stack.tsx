@@ -4,6 +4,8 @@ import { useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { JourneyStage, StackNode } from "@/content/journey";
 import { journeyStages, JOURNEY_STAGE_COUNT } from "@/content/journey";
+import { cn } from "@/lib/utils";
+import { useHydrated } from "@/hooks/use-hydrated";
 import { useReducedMotion } from "@/components/motion/use-reduced-motion";
 
 const NODE_H = 40;
@@ -11,8 +13,10 @@ const ROW_GAP = 56;
 const PADDING_Y = 36;
 const SIBLING_GAP = 28;
 
-function nodeWidth(label: string) {
-  return Math.max(84, Math.min(128, label.length * 6.5 + 40));
+function nodeWidth(label: string, compact?: boolean) {
+  const min = compact ? 72 : 84;
+  const max = compact ? 108 : 128;
+  return Math.max(min, Math.min(max, label.length * (compact ? 5.5 : 6.5) + (compact ? 32 : 40)));
 }
 
 function buildChildMap(edges: [string, string][]) {
@@ -27,7 +31,7 @@ function buildChildMap(edges: [string, string][]) {
 
 type NodeLayout = { x: number; y: number; w: number };
 
-function layoutGraph(nodes: StackNode[], edges: [string, string][]) {
+function layoutGraph(nodes: StackNode[], edges: [string, string][], compact?: boolean) {
   const children = buildChildMap(edges);
   const hasParent = new Set(edges.map(([, to]) => to));
   const root = nodes.find((n) => !hasParent.has(n.id)) ?? nodes[0]!;
@@ -39,14 +43,14 @@ function layoutGraph(nodes: StackNode[], edges: [string, string][]) {
   function placeSubtree(id: string, depth: number, centerX: number) {
     maxDepth = Math.max(maxDepth, depth);
     const node = nodeById.get(id)!;
-    const w = nodeWidth(node.label);
+    const w = nodeWidth(node.label, compact);
     const y = PADDING_Y + depth * ROW_GAP;
     positions.set(id, { x: centerX, y, w });
 
     const kids = children.get(id) ?? [];
     if (kids.length === 0) return;
 
-    const kidWidths = kids.map((kid) => nodeWidth(nodeById.get(kid)!.label));
+    const kidWidths = kids.map((kid) => nodeWidth(nodeById.get(kid)!.label, compact));
     const total =
       kidWidths.reduce((sum, kw) => sum + kw, 0) + SIBLING_GAP * (kids.length - 1);
     let cursor = centerX - total / 2;
@@ -76,15 +80,15 @@ function layoutGraph(nodes: StackNode[], edges: [string, string][]) {
   return { positions: normalized, width, height, children };
 }
 
-function singleEdgePath(from: NodeLayout, to: NodeLayout) {
-  const y1 = from.y + NODE_H / 2;
-  const y2 = to.y - NODE_H / 2;
+function singleEdgePath(from: NodeLayout, to: NodeLayout, nodeH: number) {
+  const y1 = from.y + nodeH / 2;
+  const y2 = to.y - nodeH / 2;
   const midY = (y1 + y2) / 2;
   return `M ${from.x} ${y1} C ${from.x} ${midY}, ${to.x} ${midY}, ${to.x} ${y2}`;
 }
 
-function busEdgePaths(parent: NodeLayout, kids: NodeLayout[]) {
-  const y1 = parent.y + NODE_H / 2;
+function busEdgePaths(parent: NodeLayout, kids: NodeLayout[], nodeH: number) {
+  const y1 = parent.y + nodeH / 2;
   const hubY = y1 + 18;
   const paths: string[] = [];
   paths.push(`M ${parent.x} ${y1} L ${parent.x} ${hubY}`);
@@ -93,7 +97,7 @@ function busEdgePaths(parent: NodeLayout, kids: NodeLayout[]) {
   const maxX = Math.max(...xs);
   paths.push(`M ${minX} ${hubY} L ${maxX} ${hubY}`);
   kids.forEach((k) => {
-    paths.push(`M ${k.x} ${hubY} L ${k.x} ${k.y - NODE_H / 2}`);
+    paths.push(`M ${k.x} ${hubY} L ${k.x} ${k.y - nodeH / 2}`);
   });
   return paths;
 }
@@ -102,16 +106,23 @@ export function JourneyGrowingStack({
   stage,
   stageIndex,
   stageProgress,
+  compact = false,
 }: {
   stage: JourneyStage;
   stageIndex: number;
   stageProgress: number;
+  compact?: boolean;
 }) {
+  const hydrated = useHydrated();
   const reduced = useReducedMotion();
+  const motionReady = hydrated && !reduced;
   const { positions, width, height, children } = useMemo(
-    () => layoutGraph(stage.nodes, stage.edges),
-    [stage.nodes, stage.edges],
+    () => layoutGraph(stage.nodes, stage.edges, compact),
+    [stage.nodes, stage.edges, compact],
   );
+
+  const nodeHeight = compact ? 34 : NODE_H;
+  const labelSize = compact ? 9 : 11;
 
   const highlightIds = useMemo(() => {
     const prev = journeyStages[stageIndex - 1];
@@ -135,20 +146,23 @@ export function JourneyGrowingStack({
         .filter((p): p is NodeLayout => Boolean(p));
 
       if (kids.length > 1) {
-        busEdgePaths(parent, kidLayouts).forEach((d) => paths.push(d));
+        busEdgePaths(parent, kidLayouts, nodeHeight).forEach((d) => paths.push(d));
         kids.forEach((id) => drawn.add(`${parentId}-${id}`));
       } else if (kids.length === 1 && kidLayouts[0]) {
-        paths.push(singleEdgePath(parent, kidLayouts[0]));
+        paths.push(singleEdgePath(parent, kidLayouts[0], nodeHeight));
         drawn.add(`${parentId}-${kids[0]}`);
       }
     });
 
     return paths;
-  }, [children, positions]);
+  }, [children, positions, nodeHeight]);
 
   return (
     <div
-      className="journey-stack-panel relative flex min-h-[300px] w-full items-center justify-center overflow-hidden rounded-2xl border border-border bg-card/40 p-5 md:min-h-[400px] md:p-8"
+      className={cn(
+        "journey-stack-panel relative flex w-full items-center justify-center overflow-hidden rounded-2xl border border-border bg-card/40 p-4",
+        compact ? "min-h-[240px]" : "min-h-[300px] p-5 md:min-h-[400px] md:p-8",
+      )}
       aria-hidden
     >
       <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-b from-accent-muted/25 via-transparent to-transparent" />
@@ -156,9 +170,12 @@ export function JourneyGrowingStack({
       <motion.svg
         key={stage.id}
         viewBox={`0 0 ${width} ${height}`}
-        className="relative z-[1] block h-auto w-full max-h-[420px] max-w-full"
+        className={cn(
+          "relative z-[1] block h-auto w-full max-w-full",
+          compact ? "max-h-[280px]" : "max-h-[420px]",
+        )}
         preserveAspectRatio="xMidYMid meet"
-        initial={reduced ? false : { opacity: 0 }}
+        initial={false}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.35 }}
       >
@@ -178,7 +195,7 @@ export function JourneyGrowingStack({
             strokeWidth="1.75"
             strokeLinecap="round"
             strokeLinejoin="round"
-            initial={reduced ? false : { pathLength: 0, opacity: 0.4 }}
+              initial={motionReady ? { pathLength: 0, opacity: 0.4 } : false}
             animate={{
               pathLength: 1,
               opacity: 0.5 + stageProgress * 0.45,
@@ -200,7 +217,7 @@ export function JourneyGrowingStack({
             return (
               <motion.g
                 key={`${stage.id}-${node.id}`}
-                initial={reduced ? false : { opacity: 0, scale: 0.94 }}
+                initial={motionReady ? { opacity: 0, scale: 0.94 } : false}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{
                   duration: 0.4,
@@ -210,9 +227,9 @@ export function JourneyGrowingStack({
               >
                 <rect
                   x={x - w / 2}
-                  y={y - NODE_H / 2}
+                  y={y - nodeHeight / 2}
                   width={w}
-                  height={NODE_H}
+                  height={nodeHeight}
                   rx={12}
                   fill="var(--card)"
                   stroke={isHighlight ? "var(--accent)" : "var(--border)"}
@@ -225,7 +242,7 @@ export function JourneyGrowingStack({
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill="var(--foreground)"
-                  fontSize={11}
+                  fontSize={labelSize}
                   fontWeight={isHighlight ? 600 : 500}
                   style={{ fontFamily: "var(--font-sans)" }}
                 >

@@ -9,6 +9,7 @@ import { Section } from "@/components/layout/section";
 import { SectionReveal } from "@/components/motion/section-reveal";
 import { Badge } from "@/components/ui/badge";
 import { GlowCard } from "@/components/ui/glow-card";
+import { useHydrated } from "@/hooks/use-hydrated";
 import { useReducedMotion } from "@/components/motion/use-reduced-motion";
 import { cn } from "@/lib/utils";
 
@@ -43,7 +44,9 @@ function ProjectCaseCard({
   defaultOpen?: boolean;
 }) {
   const [open, setOpen] = useState(defaultOpen);
+  const hydrated = useHydrated();
   const reduced = useReducedMotion();
+  const motionReady = hydrated && !reduced;
   const statusLabel =
     project.status === "live" ? "Live" : project.status === "planned" ? "Planned" : "Coming soon";
 
@@ -96,9 +99,9 @@ function ProjectCaseCard({
       <AnimatePresence initial={false}>
         {open ? (
           <motion.div
-            initial={reduced ? false : { height: 0, opacity: 0 }}
+            initial={motionReady ? { height: 0, opacity: 0 } : false}
             animate={{ height: "auto", opacity: 1 }}
-            exit={reduced ? undefined : { height: 0, opacity: 0 }}
+            exit={motionReady ? { height: 0, opacity: 0 } : undefined}
             transition={{ type: "spring", stiffness: 400, damping: 35 }}
             className="overflow-hidden border-t border-border"
           >

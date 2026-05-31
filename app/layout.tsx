@@ -26,9 +26,10 @@ export default function RootLayout({
   const jsonLd = createJsonLd();
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen font-sans antialiased`}
+        suppressHydrationWarning
       >
         <script
           type="application/ld+json"

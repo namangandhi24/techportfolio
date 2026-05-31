@@ -11,7 +11,7 @@ export function EngineeringImpact() {
       id="impact"
       label="Impact"
       title="Engineering impact"
-      description="Evidence from Accenture delivery—not vanity metrics."
+      description="Scoped outcomes from client delivery—headline metrics are in the hero."
     >
       <SectionReveal>
         <StaggerChildren className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

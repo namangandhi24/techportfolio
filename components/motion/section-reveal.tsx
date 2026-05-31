@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
+import { useHydrated } from "@/hooks/use-hydrated";
 import { useReducedMotion } from "@/components/motion/use-reduced-motion";
 import { cn } from "@/lib/utils";
 
@@ -29,18 +30,20 @@ export function SectionReveal({
   delay = 0,
   as = "div",
 }: SectionRevealProps) {
+  const hydrated = useHydrated();
   const reduced = useReducedMotion();
-  const Component = motion[as];
+  const Static = as;
 
-  if (reduced) {
-    const Static = as;
+  if (!hydrated || reduced) {
     return <Static className={className}>{children}</Static>;
   }
+
+  const Component = motion[as];
 
   return (
     <Component
       className={cn(className)}
-      initial="hidden"
+      initial={false}
       whileInView="visible"
       viewport={{ once: true, margin: "-10% 0px -8% 0px" }}
       transition={{ duration: 0.55, ease, delay }}
@@ -60,16 +63,17 @@ export function StaggerChildren({
   className?: string;
   stagger?: number;
 }) {
+  const hydrated = useHydrated();
   const reduced = useReducedMotion();
 
-  if (reduced) {
+  if (!hydrated || reduced) {
     return <div className={className}>{children}</div>;
   }
 
   return (
     <motion.div
       className={className}
-      initial="hidden"
+      initial={false}
       whileInView="visible"
       viewport={{ once: true, margin: "-8% 0px" }}
       variants={{
@@ -89,9 +93,10 @@ export function StaggerItem({
   children: React.ReactNode;
   className?: string;
 }) {
+  const hydrated = useHydrated();
   const reduced = useReducedMotion();
 
-  if (reduced) {
+  if (!hydrated || reduced) {
     return <div className={className}>{children}</div>;
   }
 

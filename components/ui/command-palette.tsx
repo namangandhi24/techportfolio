@@ -5,6 +5,7 @@ import { Command } from "cmdk";
 import { useTheme } from "next-themes";
 import { buildConsoleCommands, type ConsoleCommand } from "@/content/console-commands";
 import { site } from "@/content/site";
+import { scrollToHash } from "@/lib/scroll";
 import { cn } from "@/lib/utils";
 
 export function CommandPalette() {
@@ -17,7 +18,7 @@ export function CommandPalette() {
     switch (cmd.action) {
       case "navigate":
         if (cmd.href) {
-          document.querySelector(cmd.href)?.scrollIntoView({ behavior: "smooth" });
+          scrollToHash(cmd.href, "smooth");
         }
         break;
       case "theme": {
@@ -38,11 +39,11 @@ export function CommandPalette() {
       case "sandbox": {
         const demo = cmd.sandboxTab ?? "explorer";
         window.location.hash = `sandbox?demo=${demo}`;
-        document.querySelector("#sandbox")?.scrollIntoView({ behavior: "smooth" });
+        scrollToHash("#sandbox", "smooth");
         break;
       }
       case "stats":
-        document.querySelector("#impact")?.scrollIntoView({ behavior: "smooth" });
+        scrollToHash("#impact", "smooth");
         break;
     }
   }, [theme, resolvedTheme, setTheme]);

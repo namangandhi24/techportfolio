@@ -1,6 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { useHydrated } from "@/hooks/use-hydrated";
 
 function subscribe(callback: () => void) {
   const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -17,5 +18,11 @@ function getServerSnapshot() {
 }
 
 export function useReducedMotion(): boolean {
-  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const hydrated = useHydrated();
+  const prefersReduced = useSyncExternalStore(
+    subscribe,
+    getSnapshot,
+    getServerSnapshot,
+  );
+  return hydrated && prefersReduced;
 }

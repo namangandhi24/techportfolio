@@ -1,11 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useHydrated } from "@/hooks/use-hydrated";
 import { useReducedMotion } from "@/components/motion/use-reduced-motion";
-
-function subscribe() {
-  return () => {};
-}
 
 function canUseSpotlight() {
   return (
@@ -15,9 +12,9 @@ function canUseSpotlight() {
 }
 
 export function PageSpotlight() {
+  const hydrated = useHydrated();
   const reduced = useReducedMotion();
-  const pointerOk = useSyncExternalStore(subscribe, canUseSpotlight, () => false);
-  const enabled = !reduced && pointerOk;
+  const enabled = hydrated && !reduced && canUseSpotlight();
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [active, setActive] = useState(false);
   const frame = useRef(0);

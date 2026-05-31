@@ -8,7 +8,7 @@ import { CommandPaletteHint } from "@/components/ui/command-palette";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { cn } from "@/lib/utils";
 
-const sectionIds = navigation.map((n) => n.sectionId);
+const sectionIds = ["hero", ...navigation.map((n) => n.sectionId)];
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -34,8 +34,12 @@ export function Header() {
       >
         <div className="container-wide flex h-16 items-center justify-between">
           <a
-            href="#"
-            className="font-semibold tracking-tight text-foreground transition-opacity hover:opacity-80"
+            href="#hero"
+            className={cn(
+              "font-semibold tracking-tight text-foreground transition-opacity hover:opacity-80",
+              activeSection === "hero" && "text-accent",
+            )}
+            aria-current={activeSection === "hero" ? "page" : undefined}
           >
             {site.name}
           </a>

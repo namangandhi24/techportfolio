@@ -1,26 +1,25 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { useSyncExternalStore } from "react";
+import { useHydrated } from "@/hooks/use-hydrated";
 import { cn } from "@/lib/utils";
 
-function subscribe() {
-  return () => {};
-}
-
 export function ThemeToggle({ className }: { className?: string }) {
-  const mounted = useSyncExternalStore(subscribe, () => true, () => false);
+  const hydrated = useHydrated();
   const { theme, setTheme, resolvedTheme } = useTheme();
 
-  if (!mounted) {
+  const buttonClass = cn(
+    "flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:bg-accent-muted hover:text-foreground",
+    className,
+  );
+
+  if (!hydrated) {
     return (
       <button
         type="button"
         aria-label="Toggle theme"
-        className={cn(
-          "h-9 w-9 rounded-lg border border-border bg-card",
-          className,
-        )}
+        className={buttonClass}
+        suppressHydrationWarning
       />
     );
   }
@@ -33,10 +32,8 @@ export function ThemeToggle({ className }: { className?: string }) {
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
       aria-live="polite"
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className={cn(
-        "flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:bg-accent-muted hover:text-foreground",
-        className,
-      )}
+      className={buttonClass}
+      suppressHydrationWarning
     >
       {isDark ? (
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>

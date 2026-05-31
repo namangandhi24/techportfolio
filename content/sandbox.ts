@@ -27,6 +27,9 @@ export const apiFlowSteps = systemDesignLayers.map((l) => ({
 
 export const performanceLabCopy = {
   title: "Render discipline",
-  unoptimized: "List re-renders on every parent update.",
-  optimized: "Memoized list items—fewer wasted renders.",
+  description:
+    "Interactive React demo—shows when memoization prevents child components from re-rendering.",
+  unoptimized: "Each tag’s × count rises on every parent re-render.",
+  optimized: "Memoized tags keep their × count—only the parent counter moves.",
+  hint: "Tags are labels, not buttons. Use “Trigger parent re-render” to see the difference.",
 } as const;

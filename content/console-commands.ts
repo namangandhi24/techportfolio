@@ -1,6 +1,6 @@
 import { navigation, site } from "@/content/site";
 import { projects } from "@/content/projects";
-import { consoleStats } from "@/content/impact";
+import { consoleStats } from "@/content/proof";
 import type { SandboxTab } from "@/content/sandbox";
 
 export type ConsoleCommand = {

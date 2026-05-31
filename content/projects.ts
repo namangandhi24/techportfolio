@@ -39,11 +39,11 @@ export const projects: Project[] = [
     solution:
       "Custom design system, content-as-data architecture, interactive sandbox demos, and scroll-driven career narrative with strict a11y and motion budgets.",
     architecture:
-      "Next.js App Router with RSC defaults; client islands for Journey, Sandbox, and console; SVG system map; lazy-loaded secondary demos.",
+      "Next.js App Router with RSC defaults; client islands for Sandbox and console; SVG system map; lazy-loaded secondary demos.",
     technicalDecisions: [
       "TypeScript content modules for copy iteration without refactors",
       "Framer Motion + GSAP only where scroll storytelling requires it",
-      "SVG journey stack and lazy-loaded sandbox demos—no decorative WebGL",
+      "Lazy-loaded sandbox demos and system map—no decorative WebGL",
     ],
     performanceResults: [
       "Static generation for marketing routes (build target)",
@@ -76,7 +76,7 @@ export const projects: Project[] = [
         "Keep client JS small—hydrate only what recruiters touch.",
         "Centralize copy in /content for fast iteration without refactors.",
       ],
-      timeline: "v2: Journey, Sandbox, System Map, evidence-driven case studies.",
+      timeline: "v2: Sandbox, System Map, evidence-driven case studies.",
     },
   },
   {

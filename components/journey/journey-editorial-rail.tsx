@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { journeyStages, type JourneyStage } from "@/content/journey";
+import { useHydrated } from "@/hooks/use-hydrated";
 import { useReducedMotion } from "@/components/motion/use-reduced-motion";
 
 export function JourneyEditorialRail({
@@ -11,7 +12,9 @@ export function JourneyEditorialRail({
   stage: JourneyStage;
   stageIndex: number;
 }) {
+  const hydrated = useHydrated();
   const reduced = useReducedMotion();
+  const motionReady = hydrated && !reduced;
 
   return (
     <div className="flex flex-col justify-center lg:min-h-[380px]">
@@ -29,7 +32,7 @@ export function JourneyEditorialRail({
       <AnimatePresence mode="wait">
         <motion.div
           key={stage.id}
-          initial={reduced ? false : { opacity: 0, y: 14 }}
+          initial={motionReady ? { opacity: 0, y: 14 } : false}
           animate={{ opacity: 1, y: 0 }}
           exit={reduced ? undefined : { opacity: 0, y: -10 }}
           transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}

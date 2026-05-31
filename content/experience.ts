@@ -1,3 +1,6 @@
+export const experienceIntro =
+  "Application Development at Accenture—from associate to analyst. Dates, roles, and delivery highlights below.";
+
 export type ExperienceEntry = {
   id: string;
   period: string;
@@ -37,6 +40,3 @@ export const experience: ExperienceEntry[] = [
     ],
   },
 ];
-
-export const journeyIntro =
-  "Professional engineering since 2021—associate to analyst, from first production releases to platform and full-stack ownership.";

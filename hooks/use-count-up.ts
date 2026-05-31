@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useHydrated } from "@/hooks/use-hydrated";
 import { useReducedMotion } from "@/components/motion/use-reduced-motion";
 
 function parseMetricValue(value: string): { num: number; prefix: string; suffix: string } {
@@ -20,13 +21,15 @@ type UseCountUpOptions = {
 
 export function useCountUp(displayValue: string, options: UseCountUpOptions = {}) {
   const { enabled = true } = options;
+  const hydrated = useHydrated();
   const reduced = useReducedMotion();
   const { num, prefix, suffix } = parseMetricValue(displayValue);
   const [current, setCurrent] = useState(0);
   const started = useRef(false);
   const ref = useRef<HTMLSpanElement>(null);
 
-  const shouldAnimate = enabled && /\d/.test(displayValue) && !reduced;
+  const shouldAnimate =
+    hydrated && enabled && /\d/.test(displayValue) && !reduced;
 
   useEffect(() => {
     if (!shouldAnimate) return;
@@ -54,7 +57,7 @@ export function useCountUp(displayValue: string, options: UseCountUpOptions = {}
     return () => observer.disconnect();
   }, [num, shouldAnimate]);
 
-  if (!enabled || !/\d/.test(displayValue) || reduced) {
+  if (!shouldAnimate) {
     return { ref, text: displayValue };
   }
 

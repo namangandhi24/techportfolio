@@ -34,7 +34,7 @@ npm run dev
 
 | File | Purpose |
 |------|---------|
-| `achievements.ts` | Hero strip |
+| `proof.ts` | Hero metrics & shared facts |
 | `principles.ts` | Engineering principles |
 | `journey.ts` | Career eras |
 | `system-map.ts` | Stack map layers |

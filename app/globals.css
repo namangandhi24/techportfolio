@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
 :root {
+  --site-header-height: 4rem;
+  --section-scroll-gap: 0.5rem;
   --background: #f8f8f9;
   --foreground: #0a0a0b;
   --muted: #5c5c66;
@@ -132,8 +134,19 @@
     @apply text-lg leading-relaxed text-muted;
   }
 
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--site-header-height) + var(--section-scroll-gap));
+  }
+
+  /* Modest top inset; scroll targets the header anchor inside each section */
   .section-padding {
-    padding-block: clamp(4rem, 8vw, 8rem);
+    padding-top: clamp(1.25rem, 2.5vw, 1.75rem);
+    padding-bottom: clamp(3rem, 5.5vw, 5rem);
+  }
+
+  [data-scroll-anchor] {
+    scroll-margin-top: calc(var(--site-header-height) + var(--section-scroll-gap));
   }
 
   .container-wide {
@@ -231,17 +244,18 @@
     filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent) 45%, transparent));
   }
 
-  /* Journey scroll track: tall spacer without showing a local scrollbar */
-  .journey-scroll-track {
-    overflow: hidden;
-  }
-
-  .journey-section {
+  /* Hide viewport scrollbar while pinned journey is active — scroll still works */
+  html.journey-scrolling {
     scrollbar-width: none;
   }
 
-  .journey-section::-webkit-scrollbar {
-    display: none;
+  html.journey-scrolling::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  .journey-pin-panel {
+    will-change: transform;
   }
 
   .scrollbar-none {
@@ -253,12 +267,12 @@
     display: none;
   }
 
-  .hero-branding-canvas {
+  .hero-visual {
     touch-action: pan-y;
   }
 
   @media (min-width: 1024px) {
-    .hero-branding-canvas {
+    .hero-visual {
       min-height: min(72vh, 36rem);
     }
   }
@@ -334,12 +348,25 @@
     @apply scale-y-100;
   }
 
+  .engineering-pill {
+    @apply inline-flex min-h-9 max-w-full min-w-0 items-center justify-center truncate rounded-xl border border-border bg-card/80 px-3 py-2 text-center text-[11px] leading-tight font-medium text-foreground backdrop-blur-sm transition-all duration-200;
+  }
+
+  .engineering-pill--mono {
+    @apply font-mono text-muted-foreground;
+  }
+
+  .engineering-pill--icon {
+    @apply h-9 w-9 shrink-0 rounded-full p-0;
+  }
+
   .tech-badge-glow {
-    @apply rounded-md border border-border bg-card/80 px-2.5 py-1 font-mono text-[11px] text-muted-foreground backdrop-blur-sm transition-all duration-200;
+    @apply inline-flex min-h-9 max-w-full min-w-0 items-center justify-center truncate rounded-xl border border-border bg-card/80 px-3 py-2 text-center font-mono text-[11px] leading-tight font-medium text-muted-foreground backdrop-blur-sm transition-all duration-200;
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .tech-badge-glow:hover {
+    .tech-badge-glow:hover,
+    .engineering-pill:hover {
       @apply border-accent/40 text-foreground;
       box-shadow: 0 0 20px -6px var(--glow-strong);
     }

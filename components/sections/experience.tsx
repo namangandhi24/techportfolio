@@ -1,4 +1,5 @@
-import { experience, journeyIntro } from "@/content/experience";
+import { TechLogoLabel } from "@/components/ui/brand-logo";
+import { experience, experienceIntro } from "@/content/experience";
 import { Section } from "@/components/layout/section";
 import {
   SectionReveal,
@@ -11,9 +12,9 @@ export function Experience() {
   return (
     <Section
       id="experience"
-      label="Career journey"
+      label="Experience"
       title="Enterprise experience at Accenture"
-      description={journeyIntro}
+      description={experienceIntro}
     >
       <SectionReveal>
         <StaggerChildren>
@@ -47,7 +48,7 @@ export function Experience() {
                           key={tech}
                           className="rounded-md border border-border bg-background px-2 py-0.5 font-mono text-[11px] text-muted-foreground"
                         >
-                          {tech}
+                          <TechLogoLabel name={tech} logoClassName="h-3 w-3" />
                         </li>
                       ))}
                     </ul>
@@ -58,8 +59,8 @@ export function Experience() {
                           key={highlight}
                           className="flex gap-2 text-sm leading-relaxed text-muted"
                         >
-                          <span className="text-accent" aria-hidden>
-                            —
+                          <span className="shrink-0 text-accent" aria-hidden>
+                            ✓
                           </span>
                           {highlight}
                         </li>

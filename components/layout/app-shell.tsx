@@ -2,15 +2,17 @@
 
 import { navigation } from "@/content/site";
 import { useActiveSection } from "@/hooks/use-active-section";
+import { useSectionNav } from "@/hooks/use-section-nav";
 import { CommandPalette } from "@/components/ui/command-palette";
 import { ScrollProgress } from "@/components/layout/scroll-progress";
 import { SectionRail } from "@/components/layout/section-rail";
 import { PageSpotlight } from "@/components/layout/page-spotlight";
 import { BackToTop } from "@/components/ui/back-to-top";
 
-const sectionIds = navigation.map((n) => n.sectionId);
+const sectionIds = ["hero", ...navigation.map((n) => n.sectionId)];
 
 export function AppShell({ children }: { children: React.ReactNode }) {
+  useSectionNav();
   const activeSection = useActiveSection(sectionIds);
 
   return (

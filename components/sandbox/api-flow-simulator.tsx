@@ -6,7 +6,8 @@ import { SystemFlowRail } from "@/components/ui/system-flow-rail";
 
 const flowSteps = systemDesignLayers.map((l) => ({
   id: l.id,
-  label: l.shortLabel,
+  label: l.label,
+  shortLabel: l.shortLabel,
 }));
 
 export function ApiFlowSimulator() {

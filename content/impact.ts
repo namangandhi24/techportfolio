@@ -5,54 +5,50 @@ export type ImpactBlock = {
   context: string;
 };
 
+/** Work-specific outcomes—hero owns headline metrics (tenure, releases, LCP, AA) */
 export const impactBlocks: ImpactBlock[] = [
   {
-    id: "releases",
-    title: "Production releases",
-    evidence: "50+ shipped releases",
+    id: "documentation-poc",
+    title: "UI documentation POC",
+    evidence: "Squad-wide reuse",
     context:
-      "Contributed to enterprise web modules released through structured Azure DevOps pipelines with code review and quality gates.",
+      "Led a documentation proof of concept so teams could adopt shared primitives faster—fewer one-off screens and clearer handoffs.",
   },
   {
-    id: "apps",
-    title: "Enterprise platforms",
-    evidence: "Multi-module web platform",
+    id: "assistant-workflows",
+    title: "Assistant-driven workflows",
+    evidence: "Account management UX",
     context:
-      "Contributed to architecture and upgrades of a large-scale account and operations platform with structured dashboards and account workflows.",
+      "Integrated assistant-guided flows into account management modules—complex operations surfaced as guided steps instead of dense forms.",
   },
   {
-    id: "components",
-    title: "Reusable UI patterns",
-    evidence: "Centralized component library",
+    id: "multi-brand",
+    title: "Multi-brand delivery",
+    evidence: "Executive & hospitality sites",
     context:
-      "Shipped enterprise-grade shared UI primitives and a documentation POC so squads could reuse patterns instead of rebuilding screens.",
+      "Shipped responsive executive microsites and multi-brand hospitality experiences under tight timelines with CMS-driven templates.",
   },
   {
-    id: "cicd",
-    title: "CI/CD discipline",
-    evidence: "Azure DevOps pipelines",
+    id: "handoff",
+    title: "Design–dev handoff",
+    evidence: "Less drift, faster releases",
     context:
-      "Integrated frontend builds with environment promotion, traceable releases, and rollback-safe deployment practices.",
+      "Tightened specification and review rituals with design and product so cross-functional releases shipped with fewer rework cycles.",
   },
   {
-    id: "a11y",
-    title: "Accessibility",
-    evidence: "WCAG 2.2 AA target",
+    id: "platform-modules",
+    title: "Platform modules",
+    evidence: "Account & operations UI",
     context:
-      "Semantic structure, keyboard paths, and contrast discipline on every interface—not retrofitted at the end.",
+      "Contributed to a large-scale account and operations platform—structured dashboards, shared state patterns, and maintainable module boundaries.",
   },
   {
-    id: "perf",
-    title: "Performance",
-    evidence: "LCP target < 2s on this site",
+    id: "shared-ui",
+    title: "Shared UI library",
+    evidence: "Enterprise primitives",
     context:
-      "Bundle discipline, static generation, and client islands only where interaction requires it—portfolio build target documented openly.",
+      "Built and extended a centralized component library so squads shipped consistent, accessible patterns instead of rebuilding controls.",
   },
 ];
 
-export const consoleStats = [
-  { label: "Accenture tenure", value: "4+ years" },
-  { label: "Production releases", value: "50+" },
-  { label: "Primary stack", value: "Angular · React · Node" },
-  { label: "Delivery", value: "Azure DevOps CI/CD" },
-] as const;
+export { consoleStats } from "@/content/proof";
