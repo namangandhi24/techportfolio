@@ -18,7 +18,7 @@ export function SectionRail({ activeSection }: SectionRailProps) {
           <li key={item.href}>
             <a
               href={item.href}
-              className="group flex items-center justify-end gap-2"
+              className="group flex cursor-pointer items-center justify-end gap-2"
               aria-current={activeSection === item.sectionId ? "true" : undefined}
             >
               <span

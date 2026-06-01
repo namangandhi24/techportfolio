@@ -66,7 +66,7 @@ export function JourneyCarousel() {
             type="button"
             onClick={() => goTo(index - 1)}
             disabled={index === 0}
-            className="engineering-pill h-9 w-9 px-0 disabled:opacity-40"
+            className="engineering-pill h-9 w-9 cursor-pointer px-0 disabled:cursor-not-allowed disabled:opacity-40"
             aria-label="Previous chapter"
           >
             ←
@@ -75,7 +75,7 @@ export function JourneyCarousel() {
             type="button"
             onClick={() => goTo(index + 1)}
             disabled={index === journeyStages.length - 1}
-            className="engineering-pill h-9 w-9 px-0 disabled:opacity-40"
+            className="engineering-pill h-9 w-9 cursor-pointer px-0 disabled:cursor-not-allowed disabled:opacity-40"
             aria-label="Next chapter"
           >
             →

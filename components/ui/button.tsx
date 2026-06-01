@@ -29,7 +29,7 @@ export function Button({
   return (
     <button
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-[opacity,background-color,transform] duration-200 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50",
+        "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-[opacity,background-color,transform] duration-200 active:scale-[0.98] cursor-pointer disabled:cursor-not-allowed disabled:pointer-events-none disabled:opacity-50",
         variants[variant],
         sizes[size],
         className,
@@ -51,7 +51,7 @@ export function LinkButton({
     <a
       href={href}
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-[opacity,background-color,transform] duration-200 active:scale-[0.98]",
+        "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-[opacity,background-color,transform] duration-200 active:scale-[0.98] cursor-pointer",
         variants[variant],
         sizes[size],
         className,

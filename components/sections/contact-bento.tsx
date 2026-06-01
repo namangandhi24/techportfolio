@@ -1,4 +1,4 @@
-import type { BrandLogoId } from "@/content/brand-logos";
+import type { SocialBrandId } from "@/content/brand-logos";
 import { profile } from "@/content/profile";
 import { site } from "@/content/site";
 import { SocialLogo } from "@/components/ui/brand-logo";
@@ -80,7 +80,7 @@ function ContactChannel({
   action,
 }: {
   title: string;
-  brand: BrandLogoId;
+  brand: SocialBrandId;
   description: string;
   href: string;
   action: string;

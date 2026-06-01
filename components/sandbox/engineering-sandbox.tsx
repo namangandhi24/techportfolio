@@ -60,7 +60,7 @@ export function EngineeringSandbox() {
               aria-selected={tab === t.id}
               onClick={() => setTab(t.id)}
               className={cn(
-                "rounded-lg border px-4 py-2 text-sm font-medium transition-all duration-200",
+                "cursor-pointer rounded-lg border px-4 py-2 text-sm font-medium transition-all duration-200",
                 tab === t.id
                   ? "border-accent/50 bg-card text-foreground ring-2 ring-accent/15"
                   : "border-border bg-background text-muted hover:text-foreground",

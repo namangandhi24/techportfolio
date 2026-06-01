@@ -24,8 +24,25 @@
   --shadow-elevated: 0 12px 40px -16px rgba(59, 130, 246, 0.2),
     0 4px 16px -8px rgba(10, 10, 11, 0.08);
   --chapter-number: color-mix(in srgb, var(--accent) 14%, var(--foreground) 8%);
-  --code-panel-bg: #0d1117;
+  --code-panel-bg: #f6f8fa;
+  --code-panel-fg: #24292f;
   --code-panel-border: #d4d4d8;
+  --ide-bg: #f3f3f4;
+  --ide-sidebar: #ececed;
+  --ide-editor: #ffffff;
+  --ide-tab-active: #ffffff;
+  --ide-tab-inactive: #ececed;
+  --ide-border: #d4d4d8;
+  --ide-accent: #0078d4;
+  --ide-activity-bar: #e8e8ea;
+  --ide-status-bar: #0078d4;
+  --ide-status-fg: #ffffff;
+  --ide-terminal: #1e1e1e;
+  --ide-terminal-fg: #cccccc;
+  --ide-activity-width: 48px;
+  --ide-nav-width: 7.5rem;
+  --ide-sidebar-width: 280px;
+  --ide-status-height: 22px;
   --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
 }
 
@@ -52,6 +69,20 @@
     0 4px 20px -10px rgba(0, 0, 0, 0.5);
   --chapter-number: color-mix(in srgb, var(--accent) 18%, var(--foreground) 10%);
   --code-panel-border: #3f3f46;
+  --code-panel-bg: #0d1117;
+  --code-panel-fg: #d4d4d4;
+  --ide-bg: #1e1e1e;
+  --ide-sidebar: #252526;
+  --ide-editor: #1e1e1e;
+  --ide-tab-active: #1e1e1e;
+  --ide-tab-inactive: #2d2d2d;
+  --ide-border: #3c3c3c;
+  --ide-accent: #007acc;
+  --ide-activity-bar: #333333;
+  --ide-status-bar: #007acc;
+  --ide-status-fg: #ffffff;
+  --ide-terminal: #1e1e1e;
+  --ide-terminal-fg: #cccccc;
 }
 
 @theme inline {
@@ -99,6 +130,51 @@
 
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-ring;
+  }
+
+  /* Interactive cursors */
+  a[href],
+  button:not(:disabled),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  [type="checkbox"],
+  [type="radio"],
+  label[for],
+  select:not(:disabled),
+  summary,
+  [role="button"]:not([aria-disabled="true"]),
+  [role="menuitem"],
+  [role="option"],
+  [cmdk-item] {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  input:disabled,
+  select:disabled,
+  textarea:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="search"],
+  input[type="url"],
+  input[type="tel"],
+  input[type="password"],
+  input[type="number"],
+  textarea {
+    cursor: text;
+  }
+
+  input[type="range"] {
+    cursor: grab;
+  }
+
+  input[type="range"]:active {
+    cursor: grabbing;
   }
 
   .shiki,
@@ -222,6 +298,7 @@
 
   .link-hover {
     @apply underline decoration-transparent underline-offset-4 transition-[text-decoration-color,color] duration-200;
+    cursor: pointer;
   }
 
   .link-hover:hover {
@@ -370,6 +447,31 @@
       @apply border-accent/40 text-foreground;
       box-shadow: 0 0 20px -6px var(--glow-strong);
     }
+
+    button.engineering-pill:hover,
+    a.engineering-pill:hover {
+      cursor: pointer;
+    }
+  }
+
+  .cursor-col-resize {
+    cursor: col-resize;
+  }
+
+  .cursor-row-resize {
+    cursor: row-resize;
+  }
+
+  .cursor-grab {
+    cursor: grab;
+  }
+
+  .cursor-grabbing {
+    cursor: grabbing;
+  }
+
+  .cursor-zoom-in {
+    cursor: zoom-in;
   }
 }
 
@@ -387,5 +489,151 @@
   .flow-connector {
     @apply scale-y-100;
     transition: none;
+  }
+}
+
+/* IDE workspace */
+.ide-shell {
+  background: var(--ide-bg);
+  color: var(--foreground);
+}
+
+.ide-shell body,
+body:has(.ide-shell) {
+  overflow: hidden;
+  height: 100vh;
+  height: 100dvh;
+}
+
+.ide-activity-bar {
+  width: var(--ide-nav-width);
+  background: var(--ide-activity-bar);
+}
+
+.ide-sidebar-resizable {
+  width: var(--ide-sidebar-width);
+  min-width: 220px;
+  max-width: 420px;
+  resize: horizontal;
+  cursor: col-resize;
+}
+
+.ide-sidebar-resizable > * {
+  cursor: auto;
+}
+
+.ide-sidebar-resizable button,
+.ide-sidebar-resizable a[href],
+.ide-sidebar-resizable [cmdk-item] {
+  cursor: pointer;
+}
+
+.ide-sidebar {
+  background: var(--ide-sidebar);
+  border-right: 1px solid var(--ide-border);
+}
+
+.ide-editor {
+  background: var(--ide-editor);
+}
+
+.ide-tab {
+  background: var(--ide-tab-inactive);
+  border-right: 1px solid var(--ide-border);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.ide-tab--active {
+  background: var(--ide-tab-active);
+  border-top: 1px solid var(--ide-accent);
+}
+
+.ide-status-bar {
+  height: var(--ide-status-height);
+  background: var(--ide-status-bar);
+  color: var(--ide-status-fg);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.ide-terminal {
+  background: var(--ide-terminal);
+  color: var(--ide-terminal-fg);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.ide-line-gutter {
+  background: color-mix(in srgb, var(--ide-editor) 92%, var(--ide-border));
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  user-select: none;
+}
+
+.ide-mobile-drawer {
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 767px) {
+  .ide-mobile-overlay {
+    background: rgba(0, 0, 0, 0.45);
+    cursor: pointer;
+  }
+}
+
+[data-group] {
+  display: flex;
+  min-height: 0;
+  min-width: 0;
+}
+
+[data-panel] {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+[data-separator] {
+  flex-shrink: 0;
+  touch-action: none;
+}
+
+[data-separator][data-orientation="horizontal"] {
+  cursor: col-resize;
+}
+
+[data-separator][data-orientation="vertical"] {
+  cursor: row-resize;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-separator] {
+    transition: none;
+  }
+}
+
+.workspace-section {
+  border-left: 3px solid var(--ide-accent);
+  padding-left: 1rem;
+}
+
+.workspace-card {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+@media (hover: hover) {
+  .workspace-card:has(a):hover,
+  .workspace-card:has(button):hover {
+    cursor: pointer;
+  }
+
+  .workspace-card:hover {
+    border-color: color-mix(in srgb, var(--ide-accent) 35%, var(--ide-border));
+    box-shadow: 0 4px 20px -8px color-mix(in srgb, var(--ide-accent) 25%, transparent);
   }
 }

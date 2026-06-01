@@ -1,40 +1,47 @@
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
-import { AppShell } from "@/components/layout/app-shell";
-import { Hero } from "@/components/sections/hero";
-import { Work } from "@/components/sections/work";
-import { Experience } from "@/components/sections/experience";
-import { EngineeringImpact } from "@/components/sections/engineering-impact";
-import { Testimonials } from "@/components/sections/testimonials";
-import { WhatIBuild } from "@/components/sections/what-i-build";
-import { EngineeringPrinciples } from "@/components/sections/engineering-principles";
-import { InteractiveSystemMap } from "@/components/sections/interactive-system-map";
-import { EngineeringSandbox } from "@/components/sandbox/engineering-sandbox";
-import { ContactBento } from "@/components/sections/contact-bento";
+"use client";
+
+import { Suspense } from "react";
+import { PortfolioRoot } from "@/components/portfolio/portfolio-root";
+import { site } from "@/content/site";
+import { heroMetrics } from "@/content/proof";
+
+function PortfolioLoader() {
+  return (
+    <div className="flex h-screen items-center justify-center bg-[var(--background)] text-sm text-muted">
+      Loading…
+    </div>
+  );
+}
+
+function HomeSeoFallback() {
+  return (
+    <div className="sr-only">
+      <h1>
+        {site.name} — {site.role}
+      </h1>
+      <p>{site.description}</p>
+      <p>
+        Portfolio mode: scroll through projects and experience. Workspace mode: explore career
+        as an interactive developer workspace.
+      </p>
+      <ul>
+        {heroMetrics.map((m) => (
+          <li key={m.label}>
+            {m.value} {m.label}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 export default function Home() {
   return (
-    <AppShell>
-      <a
-        href="#work"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-accent-foreground"
-      >
-        Skip to work
-      </a>
-      <Header />
-      <main>
-        <Hero />
-        <Work />
-        <Experience />
-        <EngineeringImpact />
-        <Testimonials />
-        <WhatIBuild />
-        <EngineeringPrinciples />
-        <InteractiveSystemMap />
-        <EngineeringSandbox />
-        <ContactBento />
-      </main>
-      <Footer />
-    </AppShell>
+    <>
+      <HomeSeoFallback />
+      <Suspense fallback={<PortfolioLoader />}>
+        <PortfolioRoot />
+      </Suspense>
+    </>
   );
 }

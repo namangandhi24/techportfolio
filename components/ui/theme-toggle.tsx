@@ -9,7 +9,7 @@ export function ThemeToggle({ className }: { className?: string }) {
   const { theme, setTheme, resolvedTheme } = useTheme();
 
   const buttonClass = cn(
-    "flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:bg-accent-muted hover:text-foreground",
+    "flex h-9 w-9 cursor-pointer items-center justify-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:bg-accent-muted hover:text-foreground",
     className,
   );
 

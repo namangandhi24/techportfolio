@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { site } from "@/content/site";
+import { WorkLayoutHeaderActions } from "@/components/portfolio/work-layout-header-actions";
 
 export default function WorkLayout({
   children,
@@ -7,24 +8,33 @@ export default function WorkLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
-        <div className="container-wide flex h-16 items-center justify-between">
+    <div className="min-h-screen bg-[var(--ide-bg)] text-foreground">
+      <header className="sticky top-0 z-50 flex h-11 items-center justify-between gap-3 border-b border-[var(--ide-border)] bg-[var(--ide-sidebar)]/95 px-4 backdrop-blur-sm">
+        <Link
+          href="/"
+          className="truncate font-semibold text-foreground hover:text-[var(--ide-accent)]"
+        >
+          {site.name}
+        </Link>
+        <div className="flex shrink-0 items-center gap-2">
           <Link
             href="/"
-            className="font-semibold tracking-tight text-foreground hover:opacity-80"
+            className="hidden text-sm text-muted hover:text-foreground sm:inline"
           >
-            {site.name}
+            Back to portfolio
           </Link>
           <Link
-            href="/#work"
-            className="text-sm text-muted hover:text-foreground"
+            href={site.resumeUrl}
+            target="_blank"
+            rel="noopener"
+            className="rounded-md bg-[var(--ide-accent)] px-3 py-1.5 text-sm text-white hover:opacity-90"
           >
-            All projects
+            Resume
           </Link>
+          <WorkLayoutHeaderActions />
         </div>
       </header>
       {children}
-    </>
+    </div>
   );
 }

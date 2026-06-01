@@ -2,7 +2,7 @@ import { profile } from "@/content/profile";
 
 /** Single source of truth for recruiter-facing facts and hero metrics */
 export const proof = {
-  tenureYears: "4+",
+  tenureYears: "4.5+",
   tenureYearsLabel: "Years at Accenture",
   productionReleases: "50+",
   productionReleasesLabel: "Production releases",

@@ -41,7 +41,7 @@ export function MobileNav({ open, onClose, activeSection }: MobileNavProps) {
     <div className="fixed inset-0 z-[70] md:hidden" role="dialog" aria-modal="true" aria-label="Mobile navigation">
       <button
         type="button"
-        className="absolute inset-0 bg-background/80 backdrop-blur-sm"
+        className="absolute inset-0 cursor-pointer bg-background/80 backdrop-blur-sm"
         aria-label="Close menu"
         onClick={onClose}
       />
@@ -56,7 +56,7 @@ export function MobileNav({ open, onClose, activeSection }: MobileNavProps) {
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg border border-border px-3 py-1.5 text-sm text-muted hover:text-foreground"
+            className="cursor-pointer rounded-lg border border-border px-3 py-1.5 text-sm text-muted hover:text-foreground"
           >
             Close
           </button>

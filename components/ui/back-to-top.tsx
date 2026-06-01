@@ -28,7 +28,7 @@ export function BackToTop() {
         });
       }}
       className={cn(
-        "fixed bottom-6 left-6 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-muted shadow-lg transition-all duration-200 hover:border-accent/40 hover:text-foreground hover:shadow-[0_0_24px_-8px_var(--glow-strong)]",
+        "fixed bottom-6 left-6 z-50 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-border bg-card text-muted shadow-lg transition-all duration-200 hover:border-accent/40 hover:text-foreground hover:shadow-[0_0_24px_-8px_var(--glow-strong)]",
       )}
     >
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>

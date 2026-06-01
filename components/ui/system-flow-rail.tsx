@@ -65,7 +65,7 @@ export function SystemFlowRail({
             onMouseEnter={() => onStepChange(index)}
             onFocus={() => onStepChange(index)}
             onClick={() => onStepChange(index)}
-            className={cn(tabClass(index), "w-[4.75rem] max-w-[5.25rem]")}
+            className={cn(tabClass(index), "w-[4.75rem] max-w-[5.25rem] cursor-pointer")}
           >
             <span className="line-clamp-2 w-full">{stepLabel(step, true)}</span>
           </button>
@@ -88,7 +88,7 @@ export function SystemFlowRail({
             onMouseEnter={() => onStepChange(index)}
             onFocus={() => onStepChange(index)}
             onClick={() => onStepChange(index)}
-            className={tabClass(index)}
+            className={cn(tabClass(index), "cursor-pointer")}
           >
             <span className="truncate">{step.label}</span>
           </button>

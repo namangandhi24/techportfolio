@@ -76,7 +76,7 @@ function ProjectCaseCard({
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="flex w-full flex-col gap-2 p-6 text-left md:flex-row md:items-start md:justify-between"
+        className="flex w-full flex-col gap-2 p-6 text-left md:flex-row md:items-start md:justify-between cursor-pointer"
         aria-expanded={open}
       >
         <div>

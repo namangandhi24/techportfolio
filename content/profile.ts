@@ -4,7 +4,7 @@ export const profile = {
   linkedinUrl: "https://www.linkedin.com/in/gandhinaman/",
   instagramUrl: "https://www.instagram.com/",
   location: "Jhansi, Uttar Pradesh, India",
-  locationShort: "India · Remote-friendly",
+  locationShort: "Prefers remote or hybrid · Open to relocate",
   timezone: "Asia/Kolkata",
   currentRole: "Application Development Analyst",
   currentCompany: "Accenture",

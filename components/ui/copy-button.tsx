@@ -27,7 +27,7 @@ export function CopyButton({ text, label = "Copy email", className }: CopyButton
       type="button"
       onClick={copy}
       className={cn(
-        "rounded-lg border border-border bg-background px-3 py-2 text-xs font-medium text-muted transition-all duration-200 hover:border-accent/30 hover:text-foreground",
+        "rounded-lg border border-border bg-background px-3 py-2 text-xs font-medium text-muted transition-all duration-200 hover:border-accent/30 hover:text-foreground cursor-pointer",
         className,
       )}
     >

@@ -83,7 +83,7 @@ export function TestimonialsCarousel() {
           <button
             type="button"
             onClick={() => goTo(index - 1)}
-            className="engineering-pill h-9 w-9 px-0"
+            className="engineering-pill h-9 w-9 cursor-pointer px-0"
             aria-label="Previous testimonial"
           >
             ←
@@ -91,7 +91,7 @@ export function TestimonialsCarousel() {
           <button
             type="button"
             onClick={() => goTo(index + 1)}
-            className="engineering-pill h-9 w-9 px-0"
+            className="engineering-pill h-9 w-9 cursor-pointer px-0"
             aria-label="Next testimonial"
           >
             →

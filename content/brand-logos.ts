@@ -1,6 +1,6 @@
 /** Brand assets in /public/logos/ — PNG preferred, ~18–24px display size */
 
-export type BrandLogoId =
+export type RasterBrandLogoId =
   | "react"
   | "angular"
   | "typescript"
@@ -8,15 +8,18 @@ export type BrandLogoId =
   | "javascript"
   | "npm"
   | "mongodb"
-  | "python"
-  | "java"
   | "azure-devops"
   | "azure"
   | "linkedin"
   | "github"
   | "instagram";
 
-export const brandLogoFiles: Record<BrandLogoId, string> = {
+/** Inline SVG only — no PNG in /public/logos/ */
+export type SvgBrandLogoId = "python" | "java";
+
+export type BrandLogoId = RasterBrandLogoId | SvgBrandLogoId;
+
+export const brandLogoFiles: Record<RasterBrandLogoId, string> = {
   react: "react.png",
   angular: "angular.png",
   typescript: "typescript.png",
@@ -24,8 +27,6 @@ export const brandLogoFiles: Record<BrandLogoId, string> = {
   javascript: "javascript.png",
   npm: "npm.png",
   mongodb: "mongodb.png",
-  python: "python.png",
-  java: "java.png",
   "azure-devops": "azure-devops.png",
   azure: "azure.png",
   linkedin: "linkedin.png",
@@ -33,7 +34,7 @@ export const brandLogoFiles: Record<BrandLogoId, string> = {
   instagram: "instagram.png",
 };
 
-/** Maps stack / content labels to logo files */
+/** Maps stack / content labels to logo ids */
 export const techNameToBrand: Partial<Record<string, BrandLogoId>> = {
   Angular: "angular",
   React: "react",
@@ -50,7 +51,11 @@ export const techNameToBrand: Partial<Record<string, BrandLogoId>> = {
   "CI/CD": "azure-devops",
 };
 
-export function brandLogoSrc(id: BrandLogoId): string {
+export function brandUsesRasterLogo(id: BrandLogoId): id is RasterBrandLogoId {
+  return id in brandLogoFiles;
+}
+
+export function brandLogoSrc(id: RasterBrandLogoId): string {
   return `/logos/${brandLogoFiles[id]}`;
 }
 

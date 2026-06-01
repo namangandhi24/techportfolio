@@ -75,7 +75,7 @@ export function CommandPalette() {
     <div className="fixed inset-0 z-[80] flex items-start justify-center bg-background/60 p-4 pt-[12vh] backdrop-blur-sm">
       <button
         type="button"
-        className="absolute inset-0"
+        className="absolute inset-0 cursor-pointer"
         aria-label="Close developer console"
         onClick={() => setOpen(false)}
       />

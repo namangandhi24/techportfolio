@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { navigation, site } from "@/content/site";
 import { useActiveSection } from "@/hooks/use-active-section";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { ModeSwitcher } from "@/components/portfolio/mode-switcher";
+import { AppearanceMenu } from "@/components/ui/appearance-menu";
 import { CommandPaletteHint } from "@/components/ui/command-palette";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { cn } from "@/lib/utils";
@@ -69,10 +70,11 @@ export function Header() {
             >
               Get in touch
             </a>
-            <ThemeToggle />
+            <ModeSwitcher />
+            <AppearanceMenu />
             <button
               type="button"
-              className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card lg:hidden"
+              className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-lg border border-border bg-card lg:hidden"
               aria-expanded={menuOpen}
               aria-controls="mobile-nav"
               aria-label="Open menu"

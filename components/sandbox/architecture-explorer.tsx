@@ -17,7 +17,7 @@ export function ArchitectureExplorer() {
               type="button"
               onClick={() => setActiveId(layer.id)}
               className={cn(
-                "w-full rounded-lg border px-4 py-2.5 text-left text-sm font-medium transition-all duration-200",
+                "w-full cursor-pointer rounded-lg border px-4 py-2.5 text-left text-sm font-medium transition-all duration-200",
                 activeId === layer.id
                   ? "border-accent/50 bg-card ring-2 ring-accent/15"
                   : "border-border bg-background hover:border-accent/25",
