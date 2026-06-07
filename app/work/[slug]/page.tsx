@@ -148,6 +148,16 @@ export default async function CaseStudyPage({ params }: PageProps) {
           >
             ← Workspace preview
           </Link>
+          {project.liveUrl ? (
+            <Link
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-md border border-[var(--ide-border)] px-4 py-2 text-sm font-medium hover:bg-[var(--ide-tab-inactive)]"
+            >
+              Visit live site ↗
+            </Link>
+          ) : null}
           <Link
             href={`mailto:${site.email}`}
             className="rounded-md bg-[var(--ide-accent)] px-4 py-2 text-sm font-medium text-white hover:opacity-90"

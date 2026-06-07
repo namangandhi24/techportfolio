@@ -12,6 +12,7 @@ import { useTheme } from "next-themes";
 import {
   defaultEditorThemeId,
   EDITOR_THEME_STORAGE_KEY,
+  getDefaultEditorThemeForScheme,
   getEditorThemePreset,
   isEditorThemeId,
   type EditorThemeId,
@@ -26,10 +27,17 @@ type EditorThemeContextValue = {
 
 const EditorThemeContext = createContext<EditorThemeContextValue | null>(null);
 
-function readPresetId(): EditorThemeId {
-  if (typeof window === "undefined") return defaultEditorThemeId;
+function readSavedPresetId(): EditorThemeId | null {
+  if (typeof window === "undefined") return null;
   const saved = localStorage.getItem(EDITOR_THEME_STORAGE_KEY);
-  return isEditorThemeId(saved) ? saved : defaultEditorThemeId;
+  return isEditorThemeId(saved) ? saved : null;
+}
+
+function resolvePresetId(resolvedTheme?: string): EditorThemeId {
+  const saved = readSavedPresetId();
+  if (saved) return saved;
+  const scheme = resolvedTheme === "light" ? "light" : "dark";
+  return getDefaultEditorThemeForScheme(scheme);
 }
 
 function applyPreset(preset: EditorThemePreset, setTheme: (t: string) => void) {
@@ -42,14 +50,15 @@ function applyPreset(preset: EditorThemePreset, setTheme: (t: string) => void) {
 }
 
 export function EditorThemeProvider({ children }: { children: ReactNode }) {
-  const { setTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
   const [presetId, setPresetIdState] = useState<EditorThemeId>(defaultEditorThemeId);
 
   useEffect(() => {
-    const id = readPresetId();
+    if (!resolvedTheme) return;
+    const id = resolvePresetId(resolvedTheme);
     setPresetIdState(id);
     applyPreset(getEditorThemePreset(id), setTheme);
-  }, [setTheme]);
+  }, [resolvedTheme, setTheme]);
 
   const setPresetId = useCallback(
     (id: EditorThemeId) => {

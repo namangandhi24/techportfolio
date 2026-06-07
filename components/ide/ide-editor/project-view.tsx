@@ -33,12 +33,24 @@ export function ProjectView({ file }: ProjectViewProps) {
           <div>
             <p className="text-sm text-[var(--ide-accent)]">{project.role}</p>
           </div>
-          <Link
-            href={projectCaseStudyUrl(project.slug)}
-            className="shrink-0 rounded-md bg-[var(--ide-accent)] px-4 py-2 text-sm font-medium text-white hover:opacity-90"
-          >
-            Read full case study →
-          </Link>
+          <div className="flex shrink-0 flex-wrap gap-2">
+            {project.liveUrl ? (
+              <Link
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-md border border-[var(--ide-border)] px-4 py-2 text-sm font-medium hover:bg-[var(--ide-tab-inactive)]"
+              >
+                Live site ↗
+              </Link>
+            ) : null}
+            <Link
+              href={projectCaseStudyUrl(project.slug)}
+              className="rounded-md bg-[var(--ide-accent)] px-4 py-2 text-sm font-medium text-white hover:opacity-90"
+            >
+              Read full case study →
+            </Link>
+          </div>
         </div>
 
         <p className="text-base leading-relaxed text-muted">{project.outcome}</p>

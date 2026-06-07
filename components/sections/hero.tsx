@@ -40,7 +40,7 @@ export function Hero() {
             </div>
             <h1
               id="hero-title"
-              className="text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-[3.25rem] lg:leading-[1.08]"
+              className="font-display text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-[3.25rem] lg:leading-[1.08]"
             >
               {site.headline}
             </h1>
@@ -74,10 +74,6 @@ export function Hero() {
               >
                 Download resume
               </LinkButton>
-              <LinkButton href="#contact" variant="ghost" size="lg" className="w-full sm:w-auto">
-                Contact me
-              </LinkButton>
-              <CommandPaletteHint />
             </div>
 
             <dl className="mt-12 grid grid-cols-2 gap-4 border-t border-border pt-8 sm:grid-cols-4">

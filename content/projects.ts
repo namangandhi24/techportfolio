@@ -17,6 +17,7 @@ export type Project = {
   status: "coming-soon" | "live" | "planned";
   featured?: boolean;
   href?: string;
+  liveUrl?: string;
   caseStudy?: {
     overview: string;
     metrics: { label: string; value: string }[];
@@ -128,6 +129,71 @@ export const projects: Project[] = [
         "Treat design handoff as part of the release path, not a late polish step.",
       ],
       timeline: "Analyst role · ongoing platform and module delivery.",
+    },
+  },
+  {
+    id: "project-india-experience",
+    slug: "india-experience",
+    title: "Made in India",
+    outcome:
+      "Full-stack cultural archive — interactive state map, bilingual stories, community audio, and a moderated contributor pipeline deployed on Vercel.",
+    role: "Founder & Full Stack Engineer",
+    stack: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "PostgreSQL",
+      "Drizzle ORM",
+      "Framer Motion",
+    ],
+    challenge:
+      "Regional stories and oral histories disappear without a place to discover them by geography, contribute new voices, or listen alongside editorial quality controls.",
+    solution:
+      "Built a map-first explore experience, rich story reader with Hindi metadata, authenticated contribute flow, tiered moderation (admin → super admin), and a dual-mode audio hub for live radio streams and community uploads.",
+    architecture:
+      "Next.js App Router with Postgres via Drizzle; iron-session auth; REST story APIs with editorial seed fallback when no database is configured; client islands for map, audio player (HLS), and scroll-driven homepage sections.",
+    technicalDecisions: [
+      "Drizzle schema with story status enum and role-gated moderation instead of ad-hoc JSON files in production",
+      "Public story reads degrade to editorial seed catalog locally — auth and submissions require Postgres",
+      "BEM + Tailwind for maintainable component CSS across map, audio hub, and account surfaces",
+      "HLS.js for city radio streams; separate community audio division with upload + review queue",
+    ],
+    performanceResults: [
+      "Static and server-rendered marketing routes with client hydration only on map, audio, and auth",
+      "Story API pagination and visibility filters to keep explore/map payloads lean",
+      "SVG-based India map and generated story covers to avoid heavy image bundles on first paint",
+    ],
+    businessImpact: [
+      "Live product showcasing end-to-end product thinking — content, auth, moderation, and media",
+      "Demonstrates full-stack ownership from schema design through Vercel deployment",
+      "Preserves and surfaces regional narratives with a path for community contribution",
+    ],
+    problem:
+      "India's regional stories and voices lack a unified, place-based archive that is easy to explore and open to new contributors.",
+    approach:
+      "Map-led discovery, editorial seed content plus Postgres-backed submissions, role-based moderation, and radio/community audio in one cohesive Next.js application.",
+    impact:
+      "Production deployment at india-experience.vercel.app with stories, explore map, audio hub, and account/moderation flows.",
+    status: "live",
+    featured: false,
+    href: "/work/india-experience",
+    liveUrl: "https://india-experience.vercel.app",
+    caseStudy: {
+      overview:
+        "Made in India is a personal full-stack product — a living archive of Indian stories. Visitors explore by state on an interactive map, read featured and regional narratives (including Hindi metadata), listen to radio and community audio, and signed-in users can submit stories through a moderated pipeline.",
+      metrics: [
+        { label: "Platform", value: "Map + stories + audio" },
+        { label: "Backend", value: "Postgres + Drizzle" },
+        { label: "Auth", value: "iron-session + roles" },
+        { label: "Deploy", value: "Vercel · live" },
+      ],
+      lessons: [
+        "Seed editorial content early so the map and homepage feel alive before the first contributor signup.",
+        "Model moderation states explicitly in the database — ad-hoc status strings do not scale past one admin.",
+        "Split audio into radio (streams) and community (uploads) so playback and review flows stay independent.",
+      ],
+      timeline: "Solo build · Next.js 16 · React 19 · shipped to production.",
     },
   },
 ];

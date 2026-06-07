@@ -1,4 +1,6 @@
-/** Brand assets in /public/logos/ — PNG preferred, ~18–24px display size */
+/** Brand assets in /public/logos/ — PNG or SVG, ~18–24px display size */
+
+export type ColorScheme = "light" | "dark";
 
 export type RasterBrandLogoId =
   | "react"
@@ -14,10 +16,24 @@ export type RasterBrandLogoId =
   | "github"
   | "instagram";
 
-/** Inline SVG only — no PNG in /public/logos/ */
+/** Inline SVG only — no raster in /public/logos/ */
 export type SvgBrandLogoId = "python" | "java";
 
 export type BrandLogoId = RasterBrandLogoId | SvgBrandLogoId;
+
+export type ThemeAwareLogoFiles = {
+  light: string;
+  dark: string;
+};
+
+/** Dark mark on light theme; light mark on dark theme */
+export const themeAwareBrandLogos: Partial<
+  Record<RasterBrandLogoId, ThemeAwareLogoFiles>
+> = {
+  github: { light: "github-light.svg", dark: "github-dark.svg" },
+  linkedin: { light: "linkedin-light.svg", dark: "linkedin-dark.svg" },
+  instagram: { light: "instagram.svg", dark: "instagram.svg" },
+};
 
 export const brandLogoFiles: Record<RasterBrandLogoId, string> = {
   react: "react.png",
@@ -55,7 +71,15 @@ export function brandUsesRasterLogo(id: BrandLogoId): id is RasterBrandLogoId {
   return id in brandLogoFiles;
 }
 
-export function brandLogoSrc(id: RasterBrandLogoId): string {
+export function brandHasThemeVariants(id: RasterBrandLogoId): boolean {
+  return id in themeAwareBrandLogos;
+}
+
+export function brandLogoSrc(id: RasterBrandLogoId, scheme: ColorScheme = "dark"): string {
+  const themed = themeAwareBrandLogos[id];
+  if (themed) {
+    return `/logos/${scheme === "light" ? themed.light : themed.dark}`;
+  }
   return `/logos/${brandLogoFiles[id]}`;
 }
 
@@ -64,3 +88,7 @@ export function brandForTech(name: string): BrandLogoId | undefined {
 }
 
 export type SocialBrandId = "linkedin" | "github" | "instagram";
+
+export function resolveLogoScheme(resolvedTheme?: string): ColorScheme {
+  return resolvedTheme === "light" ? "light" : "dark";
+}

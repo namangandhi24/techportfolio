@@ -36,7 +36,7 @@ export function ModePickerModal({ onSelect }: ModePickerModalProps) {
       aria-labelledby="mode-picker-title"
     >
       <div className="w-full max-w-2xl rounded-2xl border border-border bg-card p-6 shadow-2xl sm:p-8">
-        <h1 id="mode-picker-title" className="text-2xl font-semibold tracking-tight text-foreground">
+        <h1 id="mode-picker-title" className="font-display text-2xl font-semibold tracking-tight text-foreground">
           How would you like to explore?
         </h1>
         <p className="mt-2 text-muted">

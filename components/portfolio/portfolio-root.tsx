@@ -34,13 +34,18 @@ function useBodyScrollPolicy(mode: "classic" | "workspace" | null) {
   useEffect(() => {
     if (mode === "workspace") {
       document.documentElement.classList.add("portfolio-workspace-mode");
+      document.documentElement.classList.remove("portfolio-classic-mode");
       document.body.classList.add("overflow-hidden", "h-dvh");
-    } else {
+    } else if (mode === "classic") {
+      document.documentElement.classList.add("portfolio-classic-mode");
       document.documentElement.classList.remove("portfolio-workspace-mode");
+      document.body.classList.remove("overflow-hidden", "h-dvh");
+    } else {
+      document.documentElement.classList.remove("portfolio-workspace-mode", "portfolio-classic-mode");
       document.body.classList.remove("overflow-hidden", "h-dvh");
     }
     return () => {
-      document.documentElement.classList.remove("portfolio-workspace-mode");
+      document.documentElement.classList.remove("portfolio-workspace-mode", "portfolio-classic-mode");
       document.body.classList.remove("overflow-hidden", "h-dvh");
     };
   }, [mode]);

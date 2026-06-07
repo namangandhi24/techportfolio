@@ -138,14 +138,28 @@ function ProjectCaseCard({
                 ))}
               </ul>
               {project.status === "live" && project.href ? (
-                <Link
-                  href={project.href}
-                  className={cn(
-                    "inline-flex text-sm font-medium text-accent hover:underline",
-                  )}
-                >
-                  Read full case study →
-                </Link>
+                <div className="flex flex-wrap gap-4">
+                  <Link
+                    href={project.href}
+                    className={cn(
+                      "inline-flex text-sm font-medium text-accent hover:underline",
+                    )}
+                  >
+                    Read full case study →
+                  </Link>
+                  {project.liveUrl ? (
+                    <Link
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cn(
+                        "inline-flex text-sm font-medium text-muted-foreground hover:text-accent hover:underline",
+                      )}
+                    >
+                      Visit live site ↗
+                    </Link>
+                  ) : null}
+                </div>
               ) : null}
             </div>
           </motion.div>

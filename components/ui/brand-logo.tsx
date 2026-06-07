@@ -1,14 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 import {
   brandForTech,
   brandLogoSrc,
   brandUsesRasterLogo,
+  resolveLogoScheme,
   type BrandLogoId,
   type SocialBrandId,
 } from "@/content/brand-logos";
 import { EngineeringArtifactIcon } from "@/components/ui/engineering-artifact-icon";
+import { useHydrated } from "@/hooks/use-hydrated";
 import { cn } from "@/lib/utils";
 
 type LogoImageProps = {
@@ -20,8 +23,16 @@ type LogoImageProps = {
 
 export function LogoImage({ brand, className, artifactId, fallback }: LogoImageProps) {
   const size = className ?? "h-[18px] w-[18px]";
+  const hydrated = useHydrated();
+  const { resolvedTheme } = useTheme();
   const [failed, setFailed] = useState(false);
   const usesRaster = brandUsesRasterLogo(brand);
+  const scheme = hydrated ? resolveLogoScheme(resolvedTheme) : "dark";
+  const src = usesRaster ? brandLogoSrc(brand, scheme) : "";
+
+  useEffect(() => {
+    setFailed(false);
+  }, [src]);
 
   if (!usesRaster) {
     return <EngineeringArtifactIcon id={artifactId ?? brand} className={size} />;
@@ -34,7 +45,8 @@ export function LogoImage({ brand, className, artifactId, fallback }: LogoImageP
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={brandLogoSrc(brand)}
+      key={`${brand}-${scheme}`}
+      src={src}
       alt=""
       aria-hidden
       className={cn("shrink-0 object-contain", size)}

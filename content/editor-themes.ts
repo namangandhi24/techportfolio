@@ -1,6 +1,12 @@
 import type { BundledTheme } from "shiki";
 
-export type EditorThemeId = "dark-plus" | "light-plus" | "cursor-dark" | "one-dark-pro";
+export type EditorThemeId =
+  | "toasty-dark"
+  | "toasty-light"
+  | "dark-plus"
+  | "light-plus"
+  | "cursor-dark"
+  | "one-dark-pro";
 
 export type EditorThemePreset = {
   id: EditorThemeId;
@@ -15,6 +21,98 @@ export type EditorThemePreset = {
 export const EDITOR_THEME_STORAGE_KEY = "portfolio-editor-theme";
 
 export const editorThemePresets: EditorThemePreset[] = [
+  {
+    id: "toasty-dark",
+    label: "Toasty Dark",
+    description: "Warm charcoal & orange glow",
+    colorScheme: "dark",
+    shikiTheme: "github-dark",
+    preview: { bg: "#0c0b09", fg: "#f4f1ea", accent: "#ff4d00" },
+    vars: {
+      "--background": "#0c0b09",
+      "--foreground": "#f4f1ea",
+      "--muted": "#b8b0a4",
+      "--muted-foreground": "#9a9288",
+      "--border": "rgba(244, 241, 234, 0.14)",
+      "--card": "#15130f",
+      "--card-foreground": "#f4f1ea",
+      "--accent": "#ff4d00",
+      "--accent-secondary": "#e63e00",
+      "--accent-muted": "rgba(255, 77, 0, 0.16)",
+      "--accent-secondary-muted": "rgba(230, 62, 0, 0.12)",
+      "--accent-foreground": "#0c0b09",
+      "--ring": "#ff4d00",
+      "--grid": "rgba(244, 241, 234, 0.04)",
+      "--hero-glow": "rgba(255, 77, 0, 0.12)",
+      "--spotlight": "rgba(255, 77, 0, 0.06)",
+      "--glow-strong": "rgba(255, 77, 0, 0.18)",
+      "--glow-border": "rgba(255, 77, 0, 0.45)",
+      "--shadow-elevated":
+        "0 16px 48px -20px rgba(255, 77, 0, 0.28), 0 4px 20px -10px rgba(0, 0, 0, 0.45)",
+      "--code-panel-bg": "#15130f",
+      "--code-panel-fg": "#f4f1ea",
+      "--code-panel-border": "rgba(244, 241, 234, 0.12)",
+      "--ide-bg": "#0c0b09",
+      "--ide-sidebar": "#15130f",
+      "--ide-editor": "#0c0b09",
+      "--ide-tab-active": "#0c0b09",
+      "--ide-tab-inactive": "#1a1814",
+      "--ide-border": "rgba(244, 241, 234, 0.12)",
+      "--ide-accent": "#ff4d00",
+      "--ide-activity-bar": "#15130f",
+      "--ide-status-bar": "#ff4d00",
+      "--ide-status-fg": "#0c0b09",
+      "--syntax-keyword": "#ffb380",
+      "--syntax-string": "#ffd4a8",
+      "--syntax-comment": "#8a8278",
+    },
+  },
+  {
+    id: "toasty-light",
+    label: "Toasty Light",
+    description: "Cream paper & warm accent",
+    colorScheme: "light",
+    shikiTheme: "github-light",
+    preview: { bg: "#f4f1ea", fg: "#0c0b09", accent: "#ff4d00" },
+    vars: {
+      "--background": "#f4f1ea",
+      "--foreground": "#0c0b09",
+      "--muted": "#6b6560",
+      "--muted-foreground": "#857f78",
+      "--border": "rgba(12, 11, 9, 0.12)",
+      "--card": "#faf8f3",
+      "--card-foreground": "#0c0b09",
+      "--accent": "#ff4d00",
+      "--accent-secondary": "#e63e00",
+      "--accent-muted": "rgba(255, 77, 0, 0.12)",
+      "--accent-secondary-muted": "rgba(230, 62, 0, 0.08)",
+      "--accent-foreground": "#ffffff",
+      "--ring": "#ff4d00",
+      "--grid": "rgba(12, 11, 9, 0.05)",
+      "--hero-glow": "rgba(255, 77, 0, 0.08)",
+      "--spotlight": "rgba(255, 77, 0, 0.05)",
+      "--glow-strong": "rgba(255, 77, 0, 0.14)",
+      "--glow-border": "rgba(255, 77, 0, 0.35)",
+      "--shadow-elevated":
+        "0 12px 40px -16px rgba(255, 77, 0, 0.18), 0 4px 16px -8px rgba(12, 11, 9, 0.08)",
+      "--code-panel-bg": "#faf8f3",
+      "--code-panel-fg": "#0c0b09",
+      "--code-panel-border": "rgba(12, 11, 9, 0.1)",
+      "--ide-bg": "#f4f1ea",
+      "--ide-sidebar": "#ebe6dc",
+      "--ide-editor": "#faf8f3",
+      "--ide-tab-active": "#faf8f3",
+      "--ide-tab-inactive": "#ebe6dc",
+      "--ide-border": "rgba(12, 11, 9, 0.1)",
+      "--ide-accent": "#ff4d00",
+      "--ide-activity-bar": "#ebe6dc",
+      "--ide-status-bar": "#ff4d00",
+      "--ide-status-fg": "#ffffff",
+      "--syntax-keyword": "#c2410c",
+      "--syntax-string": "#9a3412",
+      "--syntax-comment": "#78716c",
+    },
+  },
   {
     id: "dark-plus",
     label: "Dark+",
@@ -173,7 +271,13 @@ export const editorThemePresets: EditorThemePreset[] = [
   },
 ];
 
-export const defaultEditorThemeId: EditorThemeId = "dark-plus";
+export const defaultEditorThemeId: EditorThemeId = "toasty-dark";
+
+export function getDefaultEditorThemeForScheme(
+  scheme: "light" | "dark",
+): EditorThemeId {
+  return scheme === "light" ? "toasty-light" : "toasty-dark";
+}
 
 export function getEditorThemePreset(id: EditorThemeId): EditorThemePreset {
   return editorThemePresets.find((p) => p.id === id) ?? editorThemePresets[0]!;
